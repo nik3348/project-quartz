@@ -1,0 +1,139 @@
+[gd_scene load_steps=19 format=3 uid="uid://cda53ovjga5e1"]
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_j5yup"]
+[ext_resource type="Texture2D" uid="uid://bwk4vfy4cydvv" path="res://assets/sprites/adventurer/individual sprites/adventurer-idle-00.png" id="1_j527q"]
+[ext_resource type="Texture2D" uid="uid://cek0ncq5sxvms" path="res://assets/sprites/adventurer/individual sprites/adventurer-idle-01.png" id="2_ebn6w"]
+[ext_resource type="Texture2D" uid="uid://crv1588kf6xgm" path="res://assets/sprites/adventurer/individual sprites/adventurer-fall-00.png" id="2_kh5vc"]
+[ext_resource type="Texture2D" uid="uid://dlkajl8utwt7i" path="res://assets/sprites/adventurer/individual sprites/adventurer-fall-01.png" id="3_cijv4"]
+[ext_resource type="Texture2D" uid="uid://b14h2rns7os71" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-01.png" id="4_g58uw"]
+[ext_resource type="Texture2D" uid="uid://cco1dftt4hykk" path="res://assets/sprites/adventurer/individual sprites/adventurer-crnr-jmp-00.png" id="4_xc4wo"]
+[ext_resource type="Texture2D" uid="uid://g4tk3u4ssbvn" path="res://assets/sprites/adventurer/individual sprites/adventurer-crnr-jmp-01.png" id="5_iyxwq"]
+[ext_resource type="Texture2D" uid="uid://1arxj33yexul" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-02.png" id="5_uofpu"]
+[ext_resource type="Texture2D" uid="uid://cpt62tfe7i843" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-03.png" id="6_qgvbo"]
+[ext_resource type="Texture2D" uid="uid://blsnre07bwvd5" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-04.png" id="7_i6kun"]
+[ext_resource type="Texture2D" uid="uid://dgdkmlqgocggg" path="res://assets/sprites/adventurer/adventurer-Sheet.png" id="8_bt82w"]
+[ext_resource type="Texture2D" uid="uid://bf44pqsr7v672" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-05.png" id="8_l3lpv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjvob"]
+atlas = ExtResource("8_bt82w")
+region = Rect2(0, 37, 50, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ufk2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kh5vc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cijv4")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j527q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ebn6w")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_xc4wo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_iyxwq")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjvob")
+}],
+"loop": true,
+"name": &"recover",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_g58uw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_uofpu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qgvbo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_i6kun")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_l3lpv")
+}],
+"loop": true,
+"name": &"running",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ff11u"]
+radius = 17.0
+height = 58.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4j0bc"]
+spread = 180.0
+gravity = Vector3(-30, 10, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+scale_min = 0.0
+scale_max = 4.0
+color = Color(0, 0, 0, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y7ug4"]
+spread = 180.0
+gravity = Vector3(30, -10, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+scale_min = 0.0
+scale_max = 4.0
+color = Color(0, 0, 0, 1)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_j5yup")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_5ufk2")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_ff11u")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-10, 33)
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_4j0bc")
+lifetime = 0.6
+one_shot = true
+speed_scale = 5.0
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+position = Vector2(8, 34)
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_y7ug4")
+lifetime = 0.6
+one_shot = true
+speed_scale = 3.0
