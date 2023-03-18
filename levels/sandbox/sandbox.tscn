@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ca414j3ya0ifm"]
+[gd_scene load_steps=9 format=3 uid="uid://ca414j3ya0ifm"]
 
 [ext_resource type="Texture2D" uid="uid://b3lmg1viufilr" path="res://assets/tilesheet/dirt-002.png" id="2_bjql7"]
 [ext_resource type="Texture2D" uid="uid://c2mvoabsj1sqq" path="res://assets/backgrounds/ff1422-export.png" id="3_gi8n8"]
 [ext_resource type="PackedScene" uid="uid://cda53ovjga5e1" path="res://entities/player/player.tscn" id="3_xewum"]
+[ext_resource type="PackedScene" uid="uid://b03vwcolfmgjb" path="res://entities/slime/slime.tscn" id="4_pala8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s82a2"]
 texture = ExtResource("2_bjql7")
@@ -18,12 +19,20 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_s82a2")
 
+[sub_resource type="Environment" id="Environment_rou8j"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_veu55"]
+auto_exposure_enabled = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
-[node name="Ff1422-export" type="Sprite2D" parent="ParallaxBackground"]
-position = Vector2(503, 362)
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Ff1422-export" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(588, 107)
+scale = Vector2(1.02064, 1.33738)
 texture = ExtResource("3_gi8n8")
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -35,3 +44,27 @@ layer_0/tile_data = PackedInt32Array(262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 4
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_xewum")]
 position = Vector2(569, 273)
 scale = Vector2(0.9, 0.9)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Slime" parent="Node" instance=ExtResource("4_pala8")]
+position = Vector2(790, 286)
+
+[node name="Slime2" parent="Node" instance=ExtResource("4_pala8")]
+position = Vector2(399, 207)
+
+[node name="Slime3" parent="Node" instance=ExtResource("4_pala8")]
+position = Vector2(690, 169)
+
+[node name="Slime4" parent="Node" instance=ExtResource("4_pala8")]
+position = Vector2(861, 284)
+
+[node name="Slime5" parent="Node" instance=ExtResource("4_pala8")]
+position = Vector2(714, 283)
+
+[node name="Slime6" parent="Node" instance=ExtResource("4_pala8")]
+position = Vector2(644, 287)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rou8j")
+camera_attributes = SubResource("CameraAttributesPractical_veu55")

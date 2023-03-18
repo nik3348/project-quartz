@@ -1,18 +1,25 @@
-[gd_scene load_steps=19 format=3 uid="uid://cda53ovjga5e1"]
+[gd_scene load_steps=27 format=3 uid="uid://cda53ovjga5e1"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_j5yup"]
 [ext_resource type="Texture2D" uid="uid://bwk4vfy4cydvv" path="res://assets/sprites/adventurer/individual sprites/adventurer-idle-00.png" id="1_j527q"]
 [ext_resource type="Texture2D" uid="uid://cek0ncq5sxvms" path="res://assets/sprites/adventurer/individual sprites/adventurer-idle-01.png" id="2_ebn6w"]
 [ext_resource type="Texture2D" uid="uid://crv1588kf6xgm" path="res://assets/sprites/adventurer/individual sprites/adventurer-fall-00.png" id="2_kh5vc"]
+[ext_resource type="Texture2D" uid="uid://c1ga4ivn442fx" path="res://assets/sprites/adventurer/individual sprites/adventurer-attack2-00.png" id="2_lgqro"]
 [ext_resource type="Texture2D" uid="uid://dlkajl8utwt7i" path="res://assets/sprites/adventurer/individual sprites/adventurer-fall-01.png" id="3_cijv4"]
+[ext_resource type="Texture2D" uid="uid://c1vyew6x3fai7" path="res://assets/sprites/adventurer/individual sprites/adventurer-attack2-01.png" id="3_houvc"]
+[ext_resource type="Texture2D" uid="uid://2ul2ru7da4xm" path="res://assets/sprites/adventurer/individual sprites/adventurer-attack2-02.png" id="4_drbjs"]
 [ext_resource type="Texture2D" uid="uid://b14h2rns7os71" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-01.png" id="4_g58uw"]
 [ext_resource type="Texture2D" uid="uid://cco1dftt4hykk" path="res://assets/sprites/adventurer/individual sprites/adventurer-crnr-jmp-00.png" id="4_xc4wo"]
 [ext_resource type="Texture2D" uid="uid://g4tk3u4ssbvn" path="res://assets/sprites/adventurer/individual sprites/adventurer-crnr-jmp-01.png" id="5_iyxwq"]
 [ext_resource type="Texture2D" uid="uid://1arxj33yexul" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-02.png" id="5_uofpu"]
+[ext_resource type="Texture2D" uid="uid://3nt2stvkb20" path="res://assets/sprites/adventurer/individual sprites/adventurer-attack2-03.png" id="5_vgnnp"]
+[ext_resource type="Texture2D" uid="uid://brm2haabhfkvl" path="res://assets/sprites/adventurer/individual sprites/adventurer-attack2-04.png" id="6_0lm74"]
 [ext_resource type="Texture2D" uid="uid://cpt62tfe7i843" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-03.png" id="6_qgvbo"]
+[ext_resource type="Texture2D" uid="uid://b711e1pgfyyia" path="res://assets/sprites/adventurer/individual sprites/adventurer-attack2-05.png" id="7_6utgd"]
 [ext_resource type="Texture2D" uid="uid://blsnre07bwvd5" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-04.png" id="7_i6kun"]
 [ext_resource type="Texture2D" uid="uid://dgdkmlqgocggg" path="res://assets/sprites/adventurer/adventurer-Sheet.png" id="8_bt82w"]
 [ext_resource type="Texture2D" uid="uid://bf44pqsr7v672" path="res://assets/sprites/adventurer/individual sprites/adventurer-run-05.png" id="8_l3lpv"]
+[ext_resource type="Script" path="res://entities/hitbox/hit_box.gd" id="20_3myr0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sjvob"]
 atlas = ExtResource("8_bt82w")
@@ -20,6 +27,29 @@ region = Rect2(0, 37, 50, 37)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5ufk2"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_lgqro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_houvc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_drbjs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vgnnp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0lm74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_6utgd")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 12.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_kh5vc")
@@ -40,7 +70,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -104,21 +134,30 @@ scale_min = 0.0
 scale_max = 4.0
 color = Color(0, 0, 0, 1)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3h8lj"]
+radius = 17.5716
+height = 50.8211
+
 [node name="Player" type="CharacterBody2D"]
+scale = Vector2(-1, 1)
 collision_layer = 2
 script = ExtResource("1_j5yup")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_5ufk2")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_ff11u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_vertical_offset = -1.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(-10, 33)
@@ -137,3 +176,17 @@ process_material = SubResource("ParticleProcessMaterial_y7ug4")
 lifetime = 0.6
 one_shot = true
 speed_scale = 3.0
+
+[node name="HitBox" type="Area2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+collision_layer = 8
+collision_mask = 16
+monitorable = false
+script = ExtResource("20_3myr0")
+damage = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(8.5, 2.5)
+scale = Vector2(0.68292, 0.550952)
+shape = SubResource("CapsuleShape2D_3h8lj")
