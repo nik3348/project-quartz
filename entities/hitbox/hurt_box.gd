@@ -10,7 +10,5 @@ func hit_box_detected(hit_box: HitBox):
 	if hit_box == null:
 		return
 	
-	print(hit_box)
-	
 	if owner.has_method("take_damage"):
 		owner.take_damage(hit_box.damage)

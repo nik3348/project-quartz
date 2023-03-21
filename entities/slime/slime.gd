@@ -45,7 +45,6 @@ func _on_Timer_timeout():
 func take_damage(damage: int) -> void:
 	animation_player.connect("animation_finished", _animation_finished)
 	animation_player.play("death")
-	
 
 func _animation_finished(anim_name: String):
 	if anim_name == "death":
